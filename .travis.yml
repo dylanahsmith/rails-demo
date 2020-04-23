@@ -1,0 +1,6 @@
+language: ruby
+
+script:
+  - bin/rails db:migrate:shop VERSION=20200423155030
+  - bin/rails db:migrate:primary VERSION=20200423161344
+  - bin/rails db:migrate
