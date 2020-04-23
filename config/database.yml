@@ -9,17 +9,33 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
-development:
+shop_default: &shop_default
   <<: *default
-  database: db/development.sqlite3
+  migrations_paths: db/shop_migrate
+
+development:
+  primary:
+    <<: *default
+    database: db/development.sqlite3
+  shop:
+    <<: *shop_default
+    database: db/development_shop.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: db/test.sqlite3
+  primary:
+    <<: *default
+    database: db/test_primary.sqlite3
+  shop:
+    <<: *shop_default
+    database: db/test_shop.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  primary:
+    <<: *default
+    database: db/production_primary.sqlite3
+  shop:
+    <<: *shop_default
+    database: db/production_shop.sqlite3
